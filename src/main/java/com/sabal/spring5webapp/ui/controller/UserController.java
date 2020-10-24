@@ -1,5 +1,6 @@
 package com.sabal.spring5webapp.ui.controller;
 
+import com.sabal.spring5webapp.exceptions.UserServiceException;
 import com.sabal.spring5webapp.service.UserService;
 import com.sabal.spring5webapp.ui.model.request.UserDetailsRequestModel;
 import com.sabal.spring5webapp.ui.model.response.ErrorMessages;
@@ -29,11 +30,11 @@ public class UserController {
             consumes={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE}
     )
-    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
+    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws UserServiceException {
 
         UserRest returnValue = new UserRest();
-        if(userDetails.getFirstName().isEmpty()) {
-            throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        if(userDetails.getFirstName() == null || userDetails.getFirstName().isEmpty()) {
+            throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userDetails, userDto);
