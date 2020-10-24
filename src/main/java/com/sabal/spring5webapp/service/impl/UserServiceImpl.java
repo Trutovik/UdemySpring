@@ -1,10 +1,12 @@
 package com.sabal.spring5webapp.service.impl;
 
+import com.sabal.spring5webapp.exceptions.UserServiceException;
 import com.sabal.spring5webapp.io.entity.UserEntity;
 import com.sabal.spring5webapp.io.repositories.UserRepository;
 import com.sabal.spring5webapp.service.UserService;
 import com.sabal.spring5webapp.shared.Utils;
 import com.sabal.spring5webapp.shared.dto.UserDto;
+import com.sabal.spring5webapp.ui.model.response.ErrorMessages;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -53,6 +55,22 @@ public class UserServiceImpl implements UserService {
         UserDto returnValue = new UserDto();
 
         BeanUtils.copyProperties(storedUserDetails, returnValue);
+        return returnValue;
+    }
+
+    @Override
+    public UserDto updateUser(String userId, UserDto user) {
+        UserDto returnValue = new UserDto();
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        if(userEntity == null) {
+            throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+        }
+
+        userEntity.setFirstName(user.getFirstName());
+        userEntity.setLastName(user.getLastName());
+
+        UserEntity updatedUserDetails = userRepository.save(userEntity);
+        BeanUtils.copyProperties(updatedUserDetails, returnValue);
         return returnValue;
     }
 
