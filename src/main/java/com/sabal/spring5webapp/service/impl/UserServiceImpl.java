@@ -5,8 +5,10 @@ import com.sabal.spring5webapp.io.entity.UserEntity;
 import com.sabal.spring5webapp.io.repositories.UserRepository;
 import com.sabal.spring5webapp.service.UserService;
 import com.sabal.spring5webapp.shared.Utils;
+import com.sabal.spring5webapp.shared.dto.AddressDto;
 import com.sabal.spring5webapp.shared.dto.UserDto;
 import com.sabal.spring5webapp.ui.model.response.ErrorMessages;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,8 +50,13 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("record " + user.getEmail() + " already exists");
         }
-        UserEntity userEntity = new UserEntity();
-        BeanUtils.copyProperties(user, userEntity);
+
+        for (AddressDto address : user.getAddresses()) {
+            address.setUserDetails(user);
+            address.setAddressId(utils.generateAddressId(30));
+        }
+        ModelMapper modelMapper = new ModelMapper();
+        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
         userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userEntity.setUserId(utils.generateUserId(30));
@@ -58,7 +65,7 @@ public class UserServiceImpl implements UserService {
         UserEntity storedUserDetails = userRepository.save(userEntity);
         UserDto returnValue = new UserDto();
 
-        BeanUtils.copyProperties(storedUserDetails, returnValue);
+        returnValue = modelMapper.map(storedUserDetails, UserDto.class);
         return returnValue;
     }
 
