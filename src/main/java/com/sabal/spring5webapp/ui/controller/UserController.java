@@ -141,11 +141,24 @@ public class UserController {
                 .linkTo(WebMvcLinkBuilder.methodOn(UserController.class)
                 .getUserAddress(userId, addressId))
                 .withSelfRel();
-//        returnValue.add(userLink);
-//        returnValue.add(userAddressesLink);
-//        returnValue.add(selfLink);
-//        return returnValue;
-
         return EntityModel.of(returnValue, Arrays.asList(userLink, userAddressesLink, selfLink));
+    }
+
+    @GetMapping(path = "/email-verification",
+            produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin(origins = "http://localhost:9090")
+    public OperationStatusModel verifyEmailToken(@RequestParam(value="token") String token) {
+        OperationStatusModel returnValue = new OperationStatusModel();
+        returnValue.setOperationName(RequestOperationName.VERIFY_EMAIL.name());
+
+        boolean isVerified = userService.verifyEmailToken(token);
+
+        if (isVerified) {
+            returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+        } else {
+            returnValue.setOperationResult(RequestOperationStatus.ERROR.name());
+        }
+
+        return returnValue;
     }
 }

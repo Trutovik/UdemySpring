@@ -13,4 +13,5 @@ public interface UserService extends UserDetailsService {
     UserDto getUser(String email);
     UserDto getUserByUserId(String userId);
     List<UserDto> getUsers(int page, int limit);
+    boolean verifyEmailToken(String token);
 }
