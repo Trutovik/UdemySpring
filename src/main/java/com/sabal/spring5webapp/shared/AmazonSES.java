@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AmazonSES {
     // This address must be verified with Amazon SES.
-    final String FROM = "sergey.kargopolov@swiftdeveloperblog.com";
+    final String FROM = "casbah@mail.ru";
 
     // The subject line for the email.
     final String SUBJECT = "One last step to complete your registration with PhotoApp";

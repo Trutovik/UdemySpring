@@ -4,6 +4,8 @@ import com.sabal.spring5webapp.exceptions.UserServiceException;
 import com.sabal.spring5webapp.service.AddressService;
 import com.sabal.spring5webapp.service.UserService;
 import com.sabal.spring5webapp.shared.dto.AddressDto;
+import com.sabal.spring5webapp.ui.model.request.PasswordResetModel;
+import com.sabal.spring5webapp.ui.model.request.PasswordResetRequestModel;
 import com.sabal.spring5webapp.ui.model.request.UserDetailsRequestModel;
 import com.sabal.spring5webapp.ui.model.response.*;
 import com.sabal.spring5webapp.shared.dto.UserDto;
@@ -161,4 +163,35 @@ public class UserController {
 
         return returnValue;
     }
+
+    @PostMapping(path = "/password-reset-request",
+            produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public OperationStatusModel requestReset(@RequestBody PasswordResetRequestModel passwordResetRequestModel) {
+        OperationStatusModel returnValue = new OperationStatusModel();
+        boolean operationalResult = userService.requestPasswordReset(passwordResetRequestModel.getEmail());
+        returnValue.setOperationName(RequestOperationName.REQUEST_PASSWORD_RESET.name());
+        returnValue.setOperationResult(RequestOperationStatus.ERROR.name());
+        if (operationalResult) {
+            returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+        }
+        return returnValue;
+
+    }
+
+    @PostMapping(path = "/password-reset",
+            consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public OperationStatusModel resetPassword(@RequestBody PasswordResetModel passwordResetModel) {
+        OperationStatusModel returnValue = new OperationStatusModel();
+        boolean operationResult = userService.resetPassword(passwordResetModel.getToken(), passwordResetModel.getPassword());
+        returnValue.setOperationName(RequestOperationName.PASSWORD_RESET.name());
+        returnValue.setOperationResult(RequestOperationStatus.ERROR.name());
+
+        if (operationResult) {
+            returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+        }
+
+        return returnValue;
+    }
+
 }
