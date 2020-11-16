@@ -2,6 +2,7 @@ package com.sabal.spring5webapp.shared;
 
 import com.sabal.spring5webapp.security.SecurityConstants;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
@@ -36,14 +37,21 @@ public class Utils {
     }
 
     public static boolean hasTokenExpired(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(SecurityConstants.getTokenSecret())
-                .parseClaimsJws(token).getBody();
+        boolean returnValue = true;
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SecurityConstants.getTokenSecret())
+                    .parseClaimsJws(token).getBody();
 
-        Date tokenExpirationDate = claims.getExpiration();
-        Date todayDate = new Date();
+            Date tokenExpirationDate = claims.getExpiration();
+            Date todayDate = new Date();
 
-        return tokenExpirationDate.before(todayDate);
+            returnValue = tokenExpirationDate.before(todayDate);
+        } catch (ExpiredJwtException e) {
+            return true;
+        }
+
+        return returnValue;
     }
 
     public static String generateEmailVerificationToken(String userId) {
