@@ -1,6 +1,8 @@
 package com.sabal.spring5webapp.io.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.sabal.spring5webapp.shared.dto.UserDto;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
