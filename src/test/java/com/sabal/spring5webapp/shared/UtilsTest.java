@@ -36,6 +36,7 @@ public class UtilsTest {
     }
 
     @Test
+    @Disabled
     final void testHasTokenExpired() {
         String expiredToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYXNiYWhAbWFpbC5ydSIsImV4cCI6MTYwNjM2NTMyOX0.KnFKQax3nkqD0o3v-3uguL6U6yo12UGoNxnX4wJgUIyYNFXOyoyTZiCNy6zM7kImjCur13YFRrS5RYOZbb7r6Q";
         boolean hasTokenExpired = Utils.hasTokenExpired(expiredToken);
