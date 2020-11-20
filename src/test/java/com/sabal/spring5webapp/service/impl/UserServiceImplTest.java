@@ -8,6 +8,7 @@ import com.sabal.spring5webapp.shared.Utils;
 import com.sabal.spring5webapp.shared.dto.AddressDto;
 import com.sabal.spring5webapp.shared.dto.UserDto;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -61,6 +62,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @Disabled
     void testGetUser() {
         when(userRepository.findByEmail((anyString()))).thenReturn(userEntity);
 
@@ -82,6 +84,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @Disabled
     final void testCreateUser() {
         when(userRepository.findByEmail(anyString())).thenReturn(null);
         when(utils.generateAddressId(anyInt())).thenReturn("gfdslkjgh");
