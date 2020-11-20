@@ -26,6 +26,8 @@ public class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
+    String userId = "1hj6md90";
+
     static boolean recordsCreated = false;
 
     @BeforeEach
@@ -108,11 +110,44 @@ public class UserRepositoryTest {
         assertTrue(storedEmailVerificationStatus == newEmailVerificationStatus);
     }*/
 
+    @Test
+    final void testFindUserEntityByUserId() {
+        UserEntity userEntity = userRepository.findUserEntityByUserId(userId);
+        assertNotNull(userEntity);
+        assertTrue(userEntity.getUserId().equals(userId));
+    }
+
+    @Test
+    final void testGetUserEntityFullNameByUserId() {
+        List<Object[]> objects = userRepository.getUserEntityFullNameByUserId(userId);
+
+        Object[] user = objects.get(0);
+        String userFirstName = String.valueOf(user[0]);
+        String userLastName = String.valueOf(user[1]);
+
+        assertNotNull(userFirstName);
+        assertNotNull(userLastName);
+
+        assertTrue(user.length == 2);
+
+        System.out.println("userLastName = " + userLastName);
+        System.out.println("userFirstName = " + userFirstName);
+    }
+
+    /*@Test
+    final void testUpdateUserEntityEmailVerificationStatus() {
+        boolean newEmailVerificationStatus = false;
+        userRepository.updateUserEntityEmailVerificationStatus(newEmailVerificationStatus, userId);
+        UserEntity storedDetails = userRepository.findByUserId("1hj6md90");
+        boolean storedEmailVerificationStatus = storedDetails.getEmailVerificationStatus();
+        assertTrue(storedEmailVerificationStatus == newEmailVerificationStatus);
+    }*/
+
     private void createRecords() {
         UserEntity userEntity = new UserEntity();
         userEntity.setFirstName("Ivan");
         userEntity.setLastName("Sabalevich");
-        userEntity.setUserId("1hj6md90");
+        userEntity.setUserId(userId);
         userEntity.setEncryptedPassword("xxx");
         userEntity.setEmail("ivan@sabalevich.com");
         userEntity.setEmailVerificationStatus(true);
