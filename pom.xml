@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.sabal</groupId>
 	<artifactId>spring5webapp</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.7-SHAPSHOT</version>
 	<packaging>war</packaging>
 	<name>spring5webapp</name>
 	<description>Simple Web Application</description>
