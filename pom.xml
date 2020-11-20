@@ -17,6 +17,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<progect.scm.id>github</progect.scm.id>
 	</properties>
 
 	<dependencies>
@@ -74,15 +75,48 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.packagecloud</groupId>
+			<artifactId>client</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 
+	<scm>
+		<developerConnection>scm:git:https://github.com/Trutovik/spring5webapp.git</developerConnection>
+		<url>https://github.com/Trutovik/spring5webapp</url>
+	</scm>
+
 	<build>
+		<extensions>
+			<extension>
+				<groupId>io.packagecloud.maven.wagon</groupId>
+				<artifactId>maven-packagecloud-wagon</artifactId>
+				<version>0.0.6</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>packagecloud.release</id>
+			<url>packagecloud+https://packagecloud.io/casbah/release</url>
+		</repository>
+		<snapshotRepository>
+			<id>packagecloud.snapshot</id>
+			<url>packagecloud+https://packagecloud.io/casbah/snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>
