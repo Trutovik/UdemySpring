@@ -82,8 +82,8 @@
 	</dependencies>
 
 	<scm>
-		<developerConnection>scm:git:https://ithub.com/Trutovik/UdemySpring.git</developerConnection>
-		<url>https://githu.com/Trutovik/UdemySpring</url>
+		<developerConnection>scm:git:https://github.com/Trutovik/UdemySpring.git</developerConnection>
+		<url>https://github.com/Trutovik/UdemySpring</url>
   </scm>
 
 	<build>
