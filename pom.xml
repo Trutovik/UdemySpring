@@ -84,7 +84,6 @@
 	<scm>
 		<developerConnection>scm:git:https://github.com/Trutovik/UdemySpring.git</developerConnection>
 		<url>https://github.com/Trutovik/UdemySpring</url>
-    <tag>spring5webapp-0.0.6</tag>
   </scm>
 
 	<build>
