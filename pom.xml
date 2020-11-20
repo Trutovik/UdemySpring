@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.sabal</groupId>
 	<artifactId>spring5webapp</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>spring5webapp</name>
 	<description>Simple Web Application</description>
@@ -82,9 +82,8 @@
 	</dependencies>
 
 	<scm>
-		<developerConnection>scm:git:https://github.com/Trutovik/UdemySpring.git</developerConnection>
-		<url>https://github.com/Trutovik/UdemySpring</url>
-      <tag>spring5webapp-0.0.3</tag>
+		<developerConnection>scm:git:https://ithub.com/Trutovik/UdemySpring.git</developerConnection>
+		<url>https://githu.com/Trutovik/UdemySpring</url>
   </scm>
 
 	<build>
